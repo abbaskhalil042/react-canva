@@ -7,6 +7,8 @@ const CanvaPage = () => {
   const location = useLocation();
   const imageUrl = location.state?.imageUrl || "";
 
+  const testImageUrl = "https://via.placeholder.com/800x600.png";
+
   useEffect(() => {
     // Dispose of existing canvas instance if it exists
     if (canvasRef.current) {
@@ -25,23 +27,22 @@ const CanvaPage = () => {
     if (imageUrl) {
       console.log("Loading image from URL:", imageUrl);
 
-      fabric.Image.fromURL(
-        imageUrl,
-        (img) => {
-          console.log("Image loaded successfully");
+    fabric.Image.fromURL(
+  imageUrl,
+  (img) => {
+    img.set({
+      left: 50, // Manually set a visible position
+      top: 50,
+      width: 400, // Manually set dimensions
+      height: 300,
+      selectable: false,
+    });
 
-          img.set({
-            left: 0,
-            top: 0,
-            scaleX: canvas.width / img.width,
-            scaleY: canvas.height / img.height,
-            selectable: false, // Makes the image unselectable
-          });
-          canvas.add(img);
-          img.sendToBack(); // Ensure the image is at the back
-          canvas.renderAll();
-        },
-        { crossOrigin: "anonymous" } // Handle CORS issues
+    canvas.add(img);
+    img.sendToBack();
+    canvas.renderAll();
+  },
+  { crossOrigin: "anonymous" } // Handle CORS issues
       );
     } else {
       console.error("No image URL provided or URL is invalid");
@@ -137,6 +138,10 @@ const CanvaPage = () => {
   };
 
   return (
+    <>
+<div>
+  <h1>Add caption</h1>
+</div>
     <div className="canvas-container" style={{ position: "relative", marginTop: "20px" }}>
       <canvas id="canvas"></canvas>
       <div className="controls">
@@ -148,6 +153,7 @@ const CanvaPage = () => {
         <button onClick={downloadImage}>Download Image</button>
       </div>
     </div>
+    </>
   );
 };
 

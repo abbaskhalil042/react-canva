@@ -38,45 +38,49 @@ const App = () => {
   };
 
   return (
-<div>
-    <div className="main">
-      <div>
-        <h1><span>Name :</span>Abbas khalil</h1>
-        <h1><span>Email :</span>khalilabbas389@gmail.com</h1>
-      </div>
-      <div className="input">
-        <input
-          type="text"
-          placeholder="search image..."
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button type="button" onClick={handleSearch}>
-          Search
-        </button>
-      </div>
-
-      {loading ? (
-        <h1>Loading...</h1>
-      ) : (
-        <div className="image">
-          {images.map((image, index) => (
-            <div key={index}>
-              <img
-              className="image-img"
-                src={image.webformatURL}
-                alt={image.tags}
-                // style={{ maxWidth: "100px" }}
-              />
-             <div>
-             <button onClick={() => handleAddCaption(image)}>
-                Add Caption
-              </button>
-             </div>
-            </div>
-          ))}
+    <div className="wrapper">
+      <div className="main">
+        <div>
+          <h1>
+            <span>Name :</span>Abbas khalil
+          </h1>
+          <h1>
+            <span>Email :</span>khalilabbas389@gmail.com
+          </h1>
         </div>
-      )}
-    </div>
+        <div className="input">
+          <input
+            type="text"
+            placeholder="search image..."
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button type="button" onClick={handleSearch}>
+            Search
+          </button>
+        </div>
+
+        {loading ? (
+          <h1>Loading...</h1>
+        ) : (
+          <div className="image">
+            {images.map((image, index) => (
+              <div key={index}>
+                <img
+                  className="image-img"
+                  src={image.webformatURL}
+                  alt={image.tags}
+                  // style={{ maxWidth: "100px" }}
+                />
+                <div>
+                  <button onClick={() => handleAddCaption(image)}>
+                    Add Caption
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
