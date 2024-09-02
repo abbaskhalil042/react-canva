@@ -22,20 +22,29 @@ const CanvaPage = () => {
 
     canvasRef.current = canvas;
 
-    // Add image to canvas if imageUrl exists
     if (imageUrl) {
-      fabric.Image.fromURL(imageUrl, (img) => {
-        img.set({
-          left: 0,
-          top: 0,
-          scaleX: canvas.width / img.width,
-          scaleY: canvas.height / img.height,
-          selectable: false, // Makes the image unselectable
-        });
-        canvas.add(img);
-        img.sendToBack(); // Ensure the image is at the back
-        canvas.renderAll();
-      }, { crossOrigin: 'anonymous' }); // Handle CORS issues
+      console.log("Loading image from URL:", imageUrl);
+
+      fabric.Image.fromURL(
+        imageUrl,
+        (img) => {
+          console.log("Image loaded successfully");
+
+          img.set({
+            left: 0,
+            top: 0,
+            scaleX: canvas.width / img.width,
+            scaleY: canvas.height / img.height,
+            selectable: false, // Makes the image unselectable
+          });
+          canvas.add(img);
+          img.sendToBack(); // Ensure the image is at the back
+          canvas.renderAll();
+        },
+        { crossOrigin: "anonymous" } // Handle CORS issues
+      );
+    } else {
+      console.error("No image URL provided or URL is invalid");
     }
 
     return () => {
@@ -89,16 +98,19 @@ const CanvaPage = () => {
         });
         break;
       case "polygon":
-        shape = new fabric.Polygon([
-          { x: 50, y: 0 },
-          { x: 100, y: 50 },
-          { x: 50, y: 100 },
-          { x: 0, y: 50 },
-        ], {
-          left: 50,
-          top: 50,
-          fill: "purple",
-        });
+        shape = new fabric.Polygon(
+          [
+            { x: 50, y: 0 },
+            { x: 100, y: 50 },
+            { x: 50, y: 100 },
+            { x: 0, y: 50 },
+          ],
+          {
+            left: 50,
+            top: 50,
+            fill: "purple",
+          }
+        );
         break;
       default:
         break;
@@ -125,15 +137,7 @@ const CanvaPage = () => {
   };
 
   return (
-    <>
-      <div>
-        <h1>
-          Add caption page
-        </h1>
-      </div>
-  
     <div className="canvas-container" style={{ position: "relative", marginTop: "20px" }}>
-    
       <canvas id="canvas"></canvas>
       <div className="controls">
         <button onClick={addTextLayer}>Add Text</button>
@@ -144,7 +148,6 @@ const CanvaPage = () => {
         <button onClick={downloadImage}>Download Image</button>
       </div>
     </div>
-    </>
   );
 };
 

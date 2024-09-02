@@ -17,7 +17,7 @@ const App = () => {
       );
       const data = await response.json();
       console.log(data);
-      setImages(data.hits.slice(0, 4)); // Fetch the first 20 images
+      setImages(data.hits.slice(0, 20)); // Fetch the first 20 images
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -38,7 +38,12 @@ const App = () => {
   };
 
   return (
+<div>
     <div className="main">
+      <div>
+        <h1><span>Name :</span>Abbas khalil</h1>
+        <h1><span>Email :</span>khalilabbas389@gmail.com</h1>
+      </div>
       <div className="input">
         <input
           type="text"
@@ -57,6 +62,7 @@ const App = () => {
           {images.map((image, index) => (
             <div key={index}>
               <img
+              className="image-img"
                 src={image.webformatURL}
                 alt={image.tags}
                 // style={{ maxWidth: "100px" }}
@@ -70,6 +76,7 @@ const App = () => {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 };
